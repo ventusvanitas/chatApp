@@ -34,7 +34,6 @@ class NewMessageController: UITableViewController {
                 //if you use this setter, your app will crash if your class properties don't exactly match up with the firebase dictionary keys
                 user.setValuesForKeys(dictionary)
                 self.users.append(user)
-//                user.name = dictionary["name"]
                 print(user.name ?? "", user.email ?? "")
                 
                 // This will crash because of background thread, so lets use dispatch_async to fix
@@ -59,21 +58,72 @@ class NewMessageController: UITableViewController {
         // lets use a hack for now, actually need to dequeue cell for memory effeciency
         // let cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellId)
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! UserCell
         
         let user = users[indexPath.row]
         cell.textLabel?.text = user.name
         cell.detailTextLabel?.text = user.email
+
         
+        if let profileImageUrl = user.profileImageUrl {
+            
+            cell.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+            
+//            let url = URL(string: profileImageUrl)
+//            URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+//                
+//                // Download hit an error so lets return out
+//                if error != nil {
+//                    print(error ?? "Profile image download hit an error.")
+//                    return
+//                }
+//                
+//                DispatchQueue.main.async {
+//                    cell.profileImageView.image = UIImage(data: data!)
+//                }
+//            }).resume()
+        }
         return cell
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 72
     }
 }
 
-
+// Create own userCell for tableview
 
 class UserCell: UITableViewCell {
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        // Push labels to the right of the profile image
+        // Subtracting from y and adding to y to give some space between labels
+        textLabel?.frame = CGRect(x: 64, y: textLabel!.frame.origin.y - 2, width: textLabel!.frame.width, height: textLabel!.frame.height)
+        detailTextLabel?.frame = CGRect(x: 64, y: detailTextLabel!.frame.origin.y + 2, width: detailTextLabel!.frame.width, height: detailTextLabel!.frame.height)
+    }
+    
+    let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        // Create round edges to our profile image
+        imageView.layer.cornerRadius = 24
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+        addSubview(profileImageView)
+        
+        // iOS 9 constraint anchors
+        // Need x, y, width, height anchors
+        profileImageView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 8).isActive = true
+        profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        profileImageView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        profileImageView.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

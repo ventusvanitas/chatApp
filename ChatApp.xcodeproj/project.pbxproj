@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		60511CB96C782CFD7FE2C877 /* Pods_ChatApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F92B13767FFBC0AB1EB50FB1 /* Pods_ChatApp.framework */; };
+		93B100C31EC2D00700F07EA8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B100C21EC2D00700F07EA8 /* Extensions.swift */; };
 		93B8C22E1EBFE72400923EC9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8C22D1EBFE72400923EC9 /* AppDelegate.swift */; };
 		93B8C2301EBFE72400923EC9 /* MessagesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B8C22F1EBFE72400923EC9 /* MessagesController.swift */; };
 		93B8C2331EBFE72400923EC9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93B8C2311EBFE72400923EC9 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		1984FA625D1A1C0DDA95FFB3 /* Pods-ChatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatApp/Pods-ChatApp.release.xcconfig"; sourceTree = "<group>"; };
+		93B100C21EC2D00700F07EA8 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		93B8C22A1EBFE72400923EC9 /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93B8C22D1EBFE72400923EC9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93B8C22F1EBFE72400923EC9 /* MessagesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,14 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		93B100C11EC2CFE800F07EA8 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				93B100C21EC2D00700F07EA8 /* Extensions.swift */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
 		93B8C2211EBFE72400923EC9 = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +113,7 @@
 		93B8C22C1EBFE72400923EC9 /* ChatApp */ = {
 			isa = PBXGroup;
 			children = (
+				93B100C11EC2CFE800F07EA8 /* Helpers */,
 				93A435981EC0463A00E77856 /* Model */,
 				93A435991EC0464100E77856 /* View */,
 				93B8C23F1EBFE8E900923EC9 /* Controller */,
@@ -258,6 +269,7 @@
 				93B8C2411EBFE90200923EC9 /* LoginController.swift in Sources */,
 				93E83BB71EC189590003C296 /* User.swift in Sources */,
 				93B8C22E1EBFE72400923EC9 /* AppDelegate.swift in Sources */,
+				93B100C31EC2D00700F07EA8 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
