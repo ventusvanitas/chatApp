@@ -31,6 +31,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             
             // Successfully authenticated user
             let imageName = NSUUID().uuidString
+            // Store/upload users image to firebase server
             let storageRef = FIRStorage.storage().reference().child("\(imageName).png")
             if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
@@ -85,9 +86,7 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
         
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
             selectedImageFromPicker = editedImage
-        }
-        
-        if let originalImage = info["UIImagePickerControllerOriginalImage"]as? UIImage {
+        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
             selectedImageFromPicker = originalImage
         }
         

@@ -19,6 +19,7 @@ class MessagesController: UITableViewController {
             , action: #selector(handleLogout))
         
         let image = UIImage(named: "new_message_icon")
+        // When rightBarButton is pressed display NewMessageController
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(handleNewMessage))
         
         checkIfUserIsLoggedIn()
@@ -26,6 +27,7 @@ class MessagesController: UITableViewController {
     }
     
     func handleNewMessage() {
+        // Present newMessageController
         let newMessageController = NewMessageController()
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
@@ -53,6 +55,7 @@ class MessagesController: UITableViewController {
         } catch let logoutError {
             print(logoutError)
         }
+        // Send user to LoginController to signin or register after signout
         let loginController = LoginController()
         present(loginController, animated: true, completion: nil)
     }
