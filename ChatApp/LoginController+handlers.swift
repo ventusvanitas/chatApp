@@ -33,7 +33,14 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
             let imageName = NSUUID().uuidString
             // Store/upload users image to firebase server
             let storageRef = FIRStorage.storage().reference().child("\(imageName).png")
-            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
+            
+            // Compress file so that size is smaller and loads faster
+            //if let uploadData = UIImageJPEGRepresentation(self.profileImageView.image!, 0.1)
+            // this is the same line of code but safer because you are no longer wrapping a possible nil value/object
+            if let profileImage = self.profileImageView.image, let uploadData = UIImageJPEGRepresentation(profileImage, 0.1) {
+                
+            // These files were being uploaded as PNG and not compressed
+//            if let uploadData = UIImagePNGRepresentation(self.profileImageView.image!) {
                 storageRef.put(uploadData, metadata: nil, completion: { (metadata, error) in
                     
                     if error != nil {
@@ -63,6 +70,14 @@ extension LoginController: UIImagePickerControllerDelegate, UINavigationControll
                 print(err ?? "")
                 return
             }
+            
+//            self.messagesController?.fetchUserAndSetupNavBarTitle() 
+            // eliminate having to call the function above
+//            self.messagesController?.navigationItem.title = values["name"] as? String
+            let user = User()
+            user.setValuesForKeys(values)
+            // This setter potentially crashes if keys don't match
+            self.messagesController?.setupNavBarWithUser(user: user)
             
             // Dismiss Login/Register VC
             self.dismiss(animated: true, completion: nil)

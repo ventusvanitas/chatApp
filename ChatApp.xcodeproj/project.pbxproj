@@ -19,6 +19,7 @@
 		93E83BB51EC14E550003C296 /* NewMessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E83BB41EC14E550003C296 /* NewMessageController.swift */; };
 		93E83BB71EC189590003C296 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E83BB61EC189590003C296 /* User.swift */; };
 		93E83BB91EC191C80003C296 /* LoginController+handlers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E83BB81EC191C80003C296 /* LoginController+handlers.swift */; };
+		93EA982B1EC425F40036F732 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93EA982A1EC425F40036F732 /* ChatLogController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		93E83BB41EC14E550003C296 /* NewMessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMessageController.swift; sourceTree = "<group>"; };
 		93E83BB61EC189590003C296 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93E83BB81EC191C80003C296 /* LoginController+handlers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LoginController+handlers.swift"; sourceTree = "<group>"; };
+		93EA982A1EC425F40036F732 /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 		CFC042074ECFDD93BB8673C6 /* Pods-ChatApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatApp/Pods-ChatApp.debug.xcconfig"; sourceTree = "<group>"; };
 		F92B13767FFBC0AB1EB50FB1 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -134,6 +136,7 @@
 				93B8C22F1EBFE72400923EC9 /* MessagesController.swift */,
 				93E83BB41EC14E550003C296 /* NewMessageController.swift */,
 				93E83BB81EC191C80003C296 /* LoginController+handlers.swift */,
+				93EA982A1EC425F40036F732 /* ChatLogController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93EA982B1EC425F40036F732 /* ChatLogController.swift in Sources */,
 				93E83BB51EC14E550003C296 /* NewMessageController.swift in Sources */,
 				93B8C2301EBFE72400923EC9 /* MessagesController.swift in Sources */,
 				93E83BB91EC191C80003C296 /* LoginController+handlers.swift in Sources */,
