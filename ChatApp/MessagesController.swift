@@ -24,11 +24,47 @@ class MessagesController: UITableViewController {
         
         checkIfUserIsLoggedIn()
         
+        observeMessages()
+        
+    }
+    
+    var messages = [Message]()
+    
+    func observeMessages() {
+        let ref = FIRDatabase.database().reference().child("messages")
+        ref.observe(.childAdded, with: { (snapshot) in
+            
+            if let dictionary = snapshot.value as? [String: AnyObject] {
+                let message = Message(dictionary: dictionary)
+                self.messages.append(message)
+                
+                //this will crash because of background thread, so lets call this on dispatch_async main thread
+                DispatchQueue.main.async(execute: {
+                    self.tableView.reloadData()
+                })
+            }
+            
+        }, withCancel: nil)
+    }
+    
+   
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "cellId")
+        let message = messages[indexPath.row]
+        cell.textLabel?.text = message.toId
+        cell.detailTextLabel?.text = message.text
+        return cell
     }
     
     func handleNewMessage() {
         // Present newMessageController
         let newMessageController = NewMessageController()
+        newMessageController.messagesController = self
         let navController = UINavigationController(rootViewController: newMessageController)
         present(navController, animated: true, completion: nil)
     }
@@ -107,12 +143,13 @@ class MessagesController: UITableViewController {
         
         self.navigationItem.titleView = titleView
         
-        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
+//        titleView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showChatController)))
         
     }
     
-    func showChatController() {
-        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewLayout())
+    func showChatControllerForUser(user: User) {
+        let chatLogController = ChatLogController(collectionViewLayout: UICollectionViewFlowLayout())
+        chatLogController.user = user
         navigationController?.pushViewController(chatLogController, animated: true)
     }
     

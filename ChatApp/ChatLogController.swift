@@ -11,6 +11,13 @@ import Firebase
 
 class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     
+    var user: User? {
+        didSet {
+            // set ChatLogController title to selected users name
+            navigationItem.title = user?.name
+        }
+    }
+    
     lazy var inputTextField: UITextField = {
         let inputTextField = UITextField()
         inputTextField.placeholder = "Enter message..."
@@ -22,7 +29,6 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Chat log controller"
         collectionView?.backgroundColor = UIColor.white
         
         setupInputComponents()
@@ -77,7 +83,11 @@ class ChatLogController: UICollectionViewController, UITextFieldDelegate {
         let ref = FIRDatabase.database().reference().child("messages")
         let childRef = ref.childByAutoId()
         // is it the best thing to include the name inside of the message node
-        let values = ["text": inputTextField.text!, "name": "Morty"]
+        let toId = user!.id!
+        let fromId = FIRAuth.auth()!.currentUser!.uid
+        let timestamp = NSDate().timeIntervalSince1970
+        let values: [String : Any] = ["text": inputTextField.text!, "name": user!.name!, "toId": toId, "fromId": fromId, "timestamp": timestamp]
+        
         childRef.updateChildValues(values)
         
     }
