@@ -15,21 +15,7 @@ class UserCell: UITableViewCell {
     
     var message: Message? {
         didSet {
-            // Convert toId random generated string to users actual name
-            if let toId = message?.toId {
-                let ref = FIRDatabase.database().reference().child("users").child(toId)
-                ref.observe(.value, with: { (snapshot) in
-                    if let dictionary = snapshot.value as? [String: AnyObject] {
-                        self.textLabel?.text = dictionary["name"] as? String
-                        
-                        // Add image to left of our labels
-                        if let profileImageUrl = dictionary["profileImageUrl"] as? String {
-                            self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
-                        }
-                        
-                    }
-                }, withCancel: nil)
-            }
+            setupNameAndProfileImage()
             
             detailTextLabel?.text = message?.text
             if let seconds = message?.timestamp?.doubleValue {
@@ -38,6 +24,34 @@ class UserCell: UITableViewCell {
                 dateFormatter.dateFormat = "hh:mm:ss a"
                 timeLabel.text = dateFormatter.string(from: timestampDate as Date)
             }
+        }
+    }
+    
+    private func setupNameAndProfileImage() {
+        
+        let chatPartnerId: String?
+        
+        if message?.fromId == FIRAuth.auth()?.currentUser?.uid {
+            chatPartnerId = message?.toId
+        } else {
+            chatPartnerId = message?.fromId
+        }
+        
+        // Convert id random generated string to users actual name
+        
+        if let id: String = chatPartnerId {
+            let ref = FIRDatabase.database().reference().child("users").child(id)
+            ref.observe(.value, with: { (snapshot) in
+                if let dictionary = snapshot.value as? [String: AnyObject] {
+                    self.textLabel?.text = dictionary["name"] as? String
+                    
+                    // Add image to left of our labels
+                    if let profileImageUrl = dictionary["profileImageUrl"] as? String {
+                        self.profileImageView.loadImageUsingCacheWithUrlString(urlString: profileImageUrl)
+                    }
+                    
+                }
+            }, withCancel: nil)
         }
     }
     
@@ -62,7 +76,7 @@ class UserCell: UITableViewCell {
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.text = "HH:MM:SS"
+//        label.text = "HH:MM:SS"
         label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = UIColor.darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
